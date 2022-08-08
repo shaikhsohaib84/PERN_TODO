@@ -1,0 +1,13 @@
+create folder
+npm init -y
+npm i typescript @types/node ts-node-dev -D
+npm i --save-dev express dotenv
+npm i --save-dev sequelize pg pg-hstore
+npx tsc --init
+npm i sequelize-cli -D
+npx sequelize-cli init
+npm install cors
+npm install --save-dev @types/cors
+
+// cmd to create modal
+ npx sequelize-cli model:generate --name User --attributes name:string
