@@ -5,9 +5,9 @@ export const getTodo = async (req: Request, res: Response) => {
     try {
         const  { id='' } = req.params
     
-        const query = await db.Todo.findOne({
+        const query = await db.Todo.findAll({
             where: {
-                id: id
+                UserId: id
             },
             include: db.User
         })

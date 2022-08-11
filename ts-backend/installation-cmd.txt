@@ -8,6 +8,8 @@ npm i sequelize-cli -D
 npx sequelize-cli init
 npm install cors
 npm install --save-dev @types/cors
+npm install --save-dev cookie-parser
+npm install --save-dev jsonwebtoken @types/jsonwebtoken
 
 // cmd to create modal
  npx sequelize-cli model:generate --name User --attributes name:string

@@ -11,3 +11,8 @@ export const debounce = (fn, delay) => {
         }, delay)
     }
 }
+
+export const getCookie = () => {
+    const user = sessionStorage.getItem('user') || ''
+    return JSON.parse(user)
+}

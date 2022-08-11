@@ -11,6 +11,7 @@ export const getAllTodo = async (req: Request, res: Response) => {
                 all: true, nested: true
             }]
         })
+        
         res.status(200).json({
             'message': 'Data fetched successfully',
             'data': query,

@@ -3,7 +3,7 @@ import db from "../../../models";
 
 export const createTodo = async (req: Request, res: Response) => {
     try {
-        const { userId=1, title, description } = req?.body
+        const { userId, title, description } = req?.body
         const query = await db.Todo.create({
             UserId: userId,
             title: title,

@@ -4,10 +4,18 @@ import { useRef } from 'react'
 import { createTodo } from '../axios/apiCall'
 import { error, success } from '../util/alert'
 import { DATA_SUCCESSFULLY_UPDATED, SOME_THING_WENT_WRONG } from '../util/const'
+import { useDispatch, useSelector } from 'react-redux'
+import setModel from '../redux/action/modelAction'
 
 export const AddTodo = React.memo(({ showModal, setShowModal}) => {
+    const dispatch = useDispatch()
+    const genericState = useSelector((state) => state?.generic)
+    const modelState = useSelector((state) => state?.model)
     const title = useRef()
     const description = useRef()
+
+    const { user={} } = genericState
+    const { todo=[] } = modelState
 
     const handleClose = ()  => {
         setShowModal(false)
@@ -16,15 +24,21 @@ export const AddTodo = React.memo(({ showModal, setShowModal}) => {
     }
 
     const addTodo = async () => {
+        const todoDeepCopy = JSON.parse(JSON.stringify(todo))
+
+        const { id } = user
         const payload = {
+            'userId':  id,
             'title': title.current,
             'description': description.current
         }
         const res = await createTodo(payload)
-        
-        if(res.status !== 200){
+        const  { status, data: { data } } = res
+        if(status !== 200){
             error(SOME_THING_WENT_WRONG)
         } else{
+            todoDeepCopy.push(data)
+            dispatch(setModel('todo', todoDeepCopy))
             success(DATA_SUCCESSFULLY_UPDATED)
         }
         handleClose()
