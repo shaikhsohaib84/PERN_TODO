@@ -9,9 +9,9 @@ import { updateTodo } from '../views/todo_views/updateTodo'
 const router = Router()
 
 // GET - get all todo data
-router.get('/', [checkJwt], async (req: Request, res: Response) => {
-    await getAllTodo(req, res)
-})
+// router.get('/', [checkJwt], async (req: Request, res: Response) => {
+//     await getAllTodo(req, res)
+// })
 
 // GET - get the selected record from the todo table.
 router.get('/:id', [checkJwt], async (req: Request, res: Response) => {

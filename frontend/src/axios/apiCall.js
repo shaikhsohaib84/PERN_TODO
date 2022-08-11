@@ -29,7 +29,7 @@ export const getAll= async (id) => {
 
 export const updateTodo = async (id, object) => {
     try {
-        const res = await PUT(`/${id}/`, object)
+        const res = await PUT(`/todo/update-todo/${id}/`, object)
         return res
     } catch (error) {
         return error?.response

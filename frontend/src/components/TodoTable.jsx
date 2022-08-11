@@ -63,8 +63,21 @@ export const TodoTable = React.memo(() => {
 
     const handleRemove = async (obj) => {
         setDisable(true)
+        const  todoDeepCopy = JSON.parse(JSON.stringify(todo))
         const { id } = obj;
         const res = await removeTodo(id)
+        const { status, data } = res
+        
+        if(status !== 200){
+            return error('Not able to remove, try again later!')
+        }
+        const updatedTodo = todoDeepCopy.filter((ins) => {
+            if(ins?.id !== id){
+                return ins
+            }
+        })
+        success('todo removed')
+        dispatch(setModel( 'todo',updatedTodo ))
         setDisable(false)
     }
 
@@ -76,17 +89,27 @@ export const TodoTable = React.memo(() => {
     }
 
     const handleConfirm = async () => {
+        const todoDeepCopy = JSON.parse(JSON.stringify(todo))
         const { id } = selectedRow
+        const updatedTitle = title.current, updatedDescription = description.current
         const payload = {
-            'title': title.current,
-            'description': description.current
+            'title': updatedTitle,
+            'description': updatedDescription
         }
         const res = await updateTodo(id, payload)
 
         if (res.status !== 200) {
             error(SOME_THING_WENT_WRONG)
         } else {
+            const updatedTodo = todoDeepCopy.map((ins) => {
+                if(ins?.id === id){
+                    ins.title = updatedTitle
+                    ins.description = updatedDescription
+                }
+                return ins
+            })
             success(DATA_SUCCESSFULLY_UPDATED)
+            dispatch(setModel( 'todo', updatedTodo ))
         }
         handleClose()
     }
